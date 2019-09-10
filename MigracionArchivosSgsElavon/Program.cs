@@ -13,19 +13,17 @@ namespace MigracionArchivosSgsElavon
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var fotoatt = new FotoAttachDal();
             var listaFotos = fotoatt.GetList();
-            var tareas = new List<Task>();
-            listaFotos.ForEach(item =>
+
+            for (int i = 0; i < listaFotos.Count; i++)
             {
                 Console.WriteLine(".............................................");
-                tareas.Add(SendFiles(item.archivo, item.noar, item.idar, item.idfotoar));
+                await SendFiles(listaFotos[i].archivo,listaFotos[i].noar,listaFotos[i].idar,listaFotos[i].idfotoar);
                 Console.WriteLine("...................................");
-                
-            });
-            Task.WhenAll(tareas);
+            }
         }
 
         static async Task SendFiles(string name, string noar, int idar, int id_foto_ar)
