@@ -10,7 +10,7 @@ namespace MigracionArchivosSgsElavon.DAL
 {
     public class FotoAttachDal
     {
-        private string _connectionstring = "Server=192.168.5.68;Persist Security Info=True;Database=MIC;User Id=sa;Password=micr0f0rmas;";
+        private string _connectionstring = "Server=192.168.100.56;Persist Security Info=True;Database=MIC;User Id=sa;Password=b4ckl45h;";
 
         public List<FotoAttachModel> GetList()
         {
@@ -28,7 +28,7 @@ namespace MigracionArchivosSgsElavon.DAL
                         "WHERE BD_AR.ID_CLIENTE=43 AND STATUS = 'PROCESADO' AND ID_STATUS_AR <> 1 " +
                         "AND BD_FOTO_AR.ID_FOTO_AR NOT IN(SELECT B.ID_FOTO_AR FROM BD_ENVIO_IMAGENES_APLICACION AS B " +
                         "WHERE B.IS_ENVIO = 1) " +
-                        "AND BD_ATTACH.FEC_ALTA > '01/01/2019 00:00:00'"
+                        "AND BD_ATTACH.FEC_ALTA > '22/09/2019 23:59:00'"
                         , con);
                     con.Open();
 

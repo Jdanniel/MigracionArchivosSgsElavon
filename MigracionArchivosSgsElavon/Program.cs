@@ -51,7 +51,7 @@ namespace MigracionArchivosSgsElavon
 
                 HttpResponseMessage response = null;
                 Console.WriteLine("Iniciando Envio de Imagen: " + name);
-                response = (await client.PostAsync("http://sgse.microformas.com.mx:8093/api/files/ODT", form));
+                response = (await client.PostAsync("http://sgse.microformas.com.mx/ELAVON/MigracionArchivosApi/api/files/ODT", form));
                 var k = response.Content.ReadAsStringAsync().Result;
 
                 if(response.StatusCode != HttpStatusCode.OK)
