@@ -25,10 +25,10 @@ namespace MigracionArchivosSgsElavon.DAL
                         "FROM BD_FOTO_AR " +
                         "INNER JOIN BD_AR ON BD_AR.ID_AR = BD_FOTO_AR.ID_AR " +
                         "INNER JOIN BD_ATTACH ON BD_FOTO_AR.ID_ATTACH = BD_ATTACH.ID_ATTACH " +
+                        "LEFT JOIN BD_ENVIO_IMAGENES_APLICACION C ON C.ID_FOTO_AR = BD_FOTO_AR.ID_FOTO_AR " +
                         "WHERE BD_AR.ID_CLIENTE=43 AND STATUS = 'PROCESADO' AND ID_STATUS_AR <> 1 " +
-                        "AND BD_FOTO_AR.ID_FOTO_AR NOT IN(SELECT B.ID_FOTO_AR FROM BD_ENVIO_IMAGENES_APLICACION AS B " +
-                        "WHERE B.IS_ENVIO = 1) " +
-                        "AND BD_ATTACH.FEC_ALTA > '22/09/2019 23:59:00'"
+                        "AND BD_ATTACH.FEC_ALTA > '22/09/2019 23:59:00' " + 
+                        "AND C.NOMBRE_ARCHIVO IS NULL"
                         , con);
                     con.Open();
 
@@ -47,7 +47,7 @@ namespace MigracionArchivosSgsElavon.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                insertErrores(ex.ToString());
             }
             return lista;
         }
@@ -65,7 +65,16 @@ namespace MigracionArchivosSgsElavon.DAL
             }
             catch (Exception ex)
             {
-                throw ex;
+                insertErrores(ex.ToString());
+            }
+        }
+
+        public void insertErrores(string msg){
+            using(SqlConnection con = new SqlConnection(_connectionstring)){
+                SqlCommand cmd = new SqlCommand("INSERT INTO BD_LOG_ENVIO_IMAGENES_APLICACION " + 
+                    "VALUES ('"+msg+"',GETDATE())",con);
+                con.Open();
+                cmd.ExecuteNonQuery();
             }
         }
     }
