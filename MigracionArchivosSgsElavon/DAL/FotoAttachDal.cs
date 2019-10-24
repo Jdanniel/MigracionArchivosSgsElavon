@@ -30,6 +30,7 @@ namespace MigracionArchivosSgsElavon.DAL
                         "AND BD_ATTACH.FEC_ALTA > '22/09/2019 23:59:00' " + 
                         "AND C.NOMBRE_ARCHIVO IS NULL"
                         , con);
+                    cmd.CommandTimeout = 90;
                     con.Open();
 
                     SqlDataReader rdr = cmd.ExecuteReader();
